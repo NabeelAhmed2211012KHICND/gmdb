@@ -1,11 +1,72 @@
 package com.galvanize.gmdb.gmdb;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.galvanize.gmdb.gmdb.Model.Movie;
+import com.galvanize.gmdb.gmdb.Repository.MovieRepository;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.BDDMockito.*;
+
+import java.util.Optional;
+import static org.mockito.Mockito.when;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+// import com.galvanize.gmdb.gmdb.controller.MovieController;
+// import com.galvanize.gmdb.gmdb.controller.ReviewController;
+// import com.galvanize.gmdb.gmdb.controller.ReviewerController;
+// import com.galvanize.gmdb.gmdb.model.Movie;
+// import com.galvanize.gmdb.gmdb.model.Review;
+// import com.galvanize.gmdb.gmdb.model.ReviewFeilds;
+// import com.galvanize.gmdb.gmdb.model.Reviewer;
+// import com.galvanize.gmdb.gmdb.repository.IMovieRepository;
+// import com.galvanize.gmdb.gmdb.repository.IReviewRepository;
+// import com.galvanize.gmdb.gmdb.repository.IReviewerRepository;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class GmdbApplicationTests {
+
+
+    @Mock
+	private MovieRepository movieRepository;
+
+    private MockMvc mvc;
+
+    private JacksonTester<List<Movie>> jsonMovies;
+
+
+    
 
 	// Stories for this project are shown below in order of value, with the highest value listed first.
     // This microservice will contain the CRUD operations required to interact with the GMDB movie database.
@@ -14,7 +75,34 @@ public class GmdbApplicationTests {
     // 1. As a user
     //    I can GET a list of movies from GMDB that includes Movie ID | Movie Title | Year Released | Genre | Runtime
     //    so that I can see the list of available movies.
-    //
+	@Test
+	void canGetAllThings(){
+		Movie cut1 = Movie.builder()
+							.movie_id(1L)
+							.movie_title("chair")
+							.year_released(2003)
+                            .genre("horror")                                                                                 .genre("horror")                                                                                    .genre("horror")
+                            .genre("horror")
+
+                            .runtime(2L)
+							.build();
+		Movie cut2 = Movie.builder()
+							.movie_id(2L)
+							.movie_title("table")
+							.year_released(2003
+                            )
+                            .genre("horror")
+                            .runtime(2L)
+							.build();
+		
+        when(movieRepository.findAll()).thenReturn(List.of(cut1),List.of(cut2));
+		mvc.perform(get("/movies")
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andExpect(content().json(jsonMovies.write(movies).getJson()));
+
+	}
+	
     // 2. As a user
     //    I can provide a movie ID and get back the record shown in story 1, plus a list of reviews that contains Review ID | Movie ID | Reviewer ID | Review Text | DateTime last modified
     //    so that I can read the reviews for a movie.
@@ -54,7 +142,11 @@ public class GmdbApplicationTests {
     //    I can impersonate a reviewer and do any of the things they can do
     //    so that I can help confused reviewers.
 
-	@Test
+	private Object get(String string) {
+        return null;
+    }
+
+    @Test
 	public void contextLoads() {
 	}
 

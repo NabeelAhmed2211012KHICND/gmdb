@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.galvanize.gmdb.gmdb.Model.Movie;
+import com.galvanize.gmdb.gmdb.Repository.MovieRepository;
+import com.galvanize.gmdb.gmdb.Repository.ReviewRepository;
+import com.galvanize.gmdb.gmdb.Repository.ReviewerRepository;
+
 @RestController
 @RequestMapping("/movies")
 public class MovieController {

@@ -3,6 +3,7 @@ package com.galvanize.gmdb.gmdb;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.galvanize.gmdb.gmdb.Model.Movie;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
